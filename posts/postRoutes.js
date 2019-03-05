@@ -1,9 +1,8 @@
 const express = require('express');
-
 const postDb = require('./../data/helpers/postDb.js');
 const userDb = require('./../data/helpers/userDb.js');
 const router = express.Router();
-// router.use(express.json());
+
 
 router.get('/', async (req, res) => {
 
@@ -39,6 +38,10 @@ router.post('/', async (req, res) => {
         res.status(500).json(e);
     }
 });
+
+router.get('/:postId', async (req, res) => {
+
+})
 
 
 module.exports = router;
