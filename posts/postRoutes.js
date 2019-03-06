@@ -40,9 +40,7 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/:postId', async (req, res) => {
-    console.log(req.params);
     const post = await postDb.getById(req.params.postId);
-    console.log(post)
 
     try {
         if (post) {
@@ -57,6 +55,28 @@ router.get('/:postId', async (req, res) => {
     }
 
     console.log(post)
+})
+
+router.put('/:postId', async (req, res) => {
+
+    const id = req.params.postId;
+    console.log(id);
+    const body = req.body;
+    console.log(body);
+    const newPost = await postDb.update(id, body);
+    // console.log(newPost);
+
+    try {
+        if (newPost) {
+            res.status(201).json('Item updated');
+        }
+        else {
+            res.json('Post id is unavailable')
+        }
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
 })
 
 
