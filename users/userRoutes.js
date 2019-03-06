@@ -62,7 +62,7 @@ router.post('/', upperCase, async (req, res) => {
             res.status(201).json('New User added.')
         }
         else {
-            res.status(404).json('Post id is unavailable.')
+            res.status(404).json('User id is unavailable.')
         }
     }
     catch (e) {
@@ -71,12 +71,32 @@ router.post('/', upperCase, async (req, res) => {
 
 })
 
+router.put('/', upperCase, async (req, res) => {
+
+    const updatedUser = req.body.name;
+
+    try {
+        const updated = await userDb.insert(updatedUser);
+
+        if (updated) {
+            res.status(201).json('User updated.')
+        }
+        else {
+            res.status(404).json('User id is unavailable.')
+        }
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
+
+})
+
+
+
 router.get('/:userId', async (req, res) => {
 
     try {
-        // const user = await userDb.getById(req.params.userId);
         const posts = await userDb.getUserPosts(req.params.userId);
-
 
         if (posts) {
             res.status(200).json(posts);
