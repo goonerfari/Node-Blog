@@ -40,7 +40,23 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/:postId', async (req, res) => {
+    console.log(req.params);
+    const post = await postDb.getById(req.params.postId);
+    console.log(post)
 
+    try {
+        if (post) {
+            res.status(200).json(post);
+        }
+        else {
+            res.json('Post id is unavailable.')
+        }
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
+
+    console.log(post)
 })
 
 
