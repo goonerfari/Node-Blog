@@ -5,6 +5,7 @@ const helmet = require('helmet');
 server.use(express.json(), logger('dev'), helmet(), restricted);
 
 const postRoutes = require('./posts/postRoutes');
+const userRoutes = require('./users/userRoutes');
 
 function restricted(req, res, next) {
     const password = req.headers.authorization;
@@ -22,7 +23,6 @@ function restricted(req, res, next) {
     }
 }
 server.use((err, req, res, next) => {
-    console.error(err);
   
     res
       .status(500)
@@ -36,5 +36,8 @@ server.use((err, req, res, next) => {
 server.get('/', (req, res) => {
     res.status(200).json('Home Page up and running')
 });
+
 server.use('/api/posts/', restricted, postRoutes);
+server.use('/api/users/', restricted, userRoutes);
+
 module.exports = server;
