@@ -71,7 +71,7 @@ router.post('/', upperCase, async (req, res) => {
 
 })
 
-router.put('/', upperCase, async (req, res) => {
+router.put('/:id', upperCase, async (req, res) => {
 
     const updatedUser = req.body.name;
 
@@ -91,15 +91,35 @@ router.put('/', upperCase, async (req, res) => {
 
 })
 
+router.delete('/:id', async (req, res) => {
 
-
-router.get('/:userId', async (req, res) => {
+    const id = req.params.id;
 
     try {
-        const posts = await userDb.getUserPosts(req.params.userId);
+        const deleted = await userDb.remove(id)
 
-        if (posts) {
-            res.status(200).json(posts);
+        if (deleted) {
+            res.status(200).json('Item deleted');
+        }
+        else {
+            res.status(404).json('User is not available');
+        }
+    }
+
+    catch (e) {
+        res.status(500).json(e);
+    }
+})
+
+router.get('/:id', async (req, res) => {
+
+    const id = req.params.id;
+
+    try {
+        const user = await userDb.getById(id);
+
+        if (user) {
+            res.status(200).json(user);
         }
 
         else {
