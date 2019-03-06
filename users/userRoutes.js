@@ -96,7 +96,7 @@ router.delete('/:id', async (req, res) => {
     const id = req.params.id;
 
     try {
-        const deleted = await userDb.remove(id)
+        const deleted = await userDb.remove(id);
 
         if (deleted) {
             res.status(200).json('Item deleted');
