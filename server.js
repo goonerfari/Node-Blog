@@ -2,23 +2,24 @@ const express = require('express');
 const server = express();
 const logger = require('morgan');
 const helmet = require('helmet');
-server.use(express.json(), logger('dev'), helmet(), restricted);
+server.use(express.json(), logger('dev'), helmet(), upperCase);
 
 const postRoutes = require('./posts/postRoutes');
 const userRoutes = require('./users/userRoutes');
 
-function restricted(req, res, next) {
-    const password = req.headers.authorization;
+function upperCase(req, res, next) {
+    // const password = req.headers.authorization;
 
-    if (password === 'mellon') {
+    const username = req.body.name
+    const modified = username;
+    modified[0] = modified[0].toUpperCase();
+
+    if (username === modified) {
         next();
-    }
-    else if (password) {
-        res.status(401).json({err: 'Credentials are not valid'})
     }
     else {
         next({
-            err: 'no credentials provided'
+            err: 'User is not capitalized'
         })
     }
 }
@@ -37,7 +38,7 @@ server.get('/', (req, res) => {
     res.status(200).json('Home Page up and running')
 });
 
-server.use('/api/posts/', restricted, postRoutes);
-server.use('/api/users/', restricted, userRoutes);
+server.use('/api/posts/', upperCase, postRoutes);
+server.use('/api/users/', upperCase, userRoutes);
 
 module.exports = server;
