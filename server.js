@@ -26,17 +26,12 @@ server.use((err, req, res, next) => {
   
     res
       .status(500)
-      .json({ message: 'There was an error performing the required operation' });
+      .json({ 
+          message: 'There was an error performing the required operation',
+          err: err
+        });
   });
 
-  
-// server.use((err, req, res, next) => {
-//     res.status(400).json({
-//         message: 'erro on error side',
-//         err: err
-//     })
-// })
-// server.use()
 
 server.get('/', (req, res) => {
     res.status(200).json('Home Page up and running')
