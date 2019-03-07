@@ -41,19 +41,17 @@ router.get('/', async (req, res) => {
             res.status(200).json(users);
         }
         else {
-            console.log('here')
             res.status(404).json(`Users are not available.`)
         }
     }
     catch (e) {
-        console.log(e)
         res.status(500).json(e);
     }
 })
 
 router.post('/', upperCase, async (req, res) => {
 
-    const newUser = req.body.name;
+    const newUser = req.body;
 
     try {
         const added = await userDb.insert(newUser);
@@ -71,12 +69,14 @@ router.post('/', upperCase, async (req, res) => {
 
 })
 
-router.put('/:id', upperCase, async (req, res) => {
+router.put('/:id', async (req, res) => {
 
-    const updatedUser = req.body.name;
+    const id = req.params.id;
+    const updatedUser = req.body;
 
     try {
-        const updated = await userDb.insert(updatedUser);
+        const updated = await userDb.update(id, updatedUser);
+        console.log(updated);
 
         if (updated) {
             res.status(201).json('User updated.')
@@ -95,11 +95,12 @@ router.delete('/:id', async (req, res) => {
 
     const id = req.params.id;
 
+    const postRemoved = await postDb.removeByUser(id);
     try {
-        const deleted = await userDb.remove(id)
+        const deleted = await userDb.remove(id);
 
         if (deleted) {
-            res.status(200).json('Item deleted');
+            res.status(200).json('User was successfully deleted');
         }
         else {
             res.status(404).json('User is not available');

@@ -39,8 +39,8 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/:postId', async (req, res) => {
-    const post = await postDb.getById(req.params.postId);
+router.get('/:id', async (req, res) => {
+    const post = await postDb.getById(req.params.id);
 
     try {
         if (post) {
@@ -56,12 +56,11 @@ router.get('/:postId', async (req, res) => {
 
 })
 
-router.put('/:postId', async (req, res) => {
+router.put('/:id', async (req, res) => {
 
-    const id = req.params.postId;
+    const id = req.params.id;
     const body = req.body;
     const newPost = await postDb.update(id, body);
-
     try {
         if (newPost) {
             res.status(201).json('Item updated.');
@@ -75,9 +74,9 @@ router.put('/:postId', async (req, res) => {
     }
 })
 
-router.delete('/:postId', async (req, res) => {
+router.delete('/:id', async (req, res) => {
 
-    const id = req.params.postId;
+    const id = req.params.id;
     const deleted = await postDb.remove(id);
 
     try {

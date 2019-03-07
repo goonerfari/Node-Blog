@@ -8,10 +8,6 @@ const postRoutes = require('./posts/postRoutes');
 const userRoutes = require('./users/userRoutes');
 
 
-
-
-
-
 server.get('/', (req, res) => {
     res.status(200).json('Home Page up and running')
 });
