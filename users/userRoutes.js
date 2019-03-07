@@ -95,11 +95,12 @@ router.delete('/:id', async (req, res) => {
 
     const id = req.params.id;
 
+    const postRemoved = await postDb.removeByUser(id);
     try {
         const deleted = await userDb.remove(id);
 
         if (deleted) {
-            res.status(200).json('Item deleted');
+            res.status(200).json('User was successfully deleted');
         }
         else {
             res.status(404).json('User is not available');
