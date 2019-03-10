@@ -1,8 +1,9 @@
 const express = require('express');
+const cors = require('cors');
 const server = express();
 const logger = require('morgan');
 const helmet = require('helmet');
-server.use(express.json(), logger('dev'), helmet());
+server.use(express.json(), logger('dev'), cors(),helmet());
 
 const postRoutes = require('./posts/postRoutes');
 const userRoutes = require('./users/userRoutes');
