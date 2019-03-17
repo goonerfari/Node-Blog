@@ -6,13 +6,19 @@ module.exports = {
   insert,
   update,
   remove,
-  removeByUser
+  removeByUser,
+  getByCategoryId
 };
 
 function get() {
   return db('posts');
 }
 
+function getByCategoryId(id) {
+  return db('posts')
+    .where('category_id', id)
+    // .then()
+}
 function getById(id) {
   return db('posts')
     .where({ id })

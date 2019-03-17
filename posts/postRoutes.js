@@ -39,6 +39,23 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.get('/category/:id', async (req, res) => {
+
+    const posts = await postDb.getByCategoryId(req.params.id);
+
+    try {
+        if (posts.length > 0) {
+            res.status(200).json(posts);
+        }
+        else {
+            res.status(404).json('Category Id is invalid.')
+        }
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
+})
+
 router.get('/:id', async (req, res) => {
     const post = await postDb.getById(req.params.id);
 
