@@ -1,8 +1,20 @@
 const express = require('express');
 const postDb = require('./../data/helpers/postDb.js');
+const multer = require('multer');
 const userDb = require('./../data/helpers/userDb.js');
 const router = express.Router();
 
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads/')
+    },
+    filename: function(req, file, cb) {
+        cb(null, new Date().toISOString()+ file.originalname);
+    }
+
+})
+
+const upload = multer({ storage: storage });
 
 router.get('/', async (req, res) => {
 
@@ -21,7 +33,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('postMainImg'),  async (req, res) => {
     const Post = req.body;
     Post.user_id = 1;
     const added = await postDb.insert(Post);
