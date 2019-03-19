@@ -17,6 +17,18 @@ exports.up = function(knex) {
         .notNullable()
         .references('id')
         .inTable('users');
+    })
+
+    .createTable('categories', function(categories) {
+      categories.increments();
+      categories.text('text').notNullable();
+
+      categories
+        .integer('post_id')
+        .unsigned()
+        // .notNullable()
+        .references('id')
+        .inTable('post');
     });
 };
 
