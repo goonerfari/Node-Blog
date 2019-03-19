@@ -9,29 +9,31 @@ exports.up = function(knex) {
     })
     .createTable('posts', function(posts) {
       posts.increments();
-      posts.text('text').notNullable();
-
+      posts.string('title').notNullable();
+      posts.string('body').notNullable();
+      posts.string('postMainImg').notNullable();
       posts
         .integer('user_id')
         .unsigned()
         .notNullable()
         .references('id')
         .inTable('users');
+      posts
+        .integer('category_id')
+        .unsigned()
+        // .notNullable()
+        .references('id')
+        .inTable('categories');
     })
 
     .createTable('categories', function(categories) {
       categories.increments();
-      categories.text('text').notNullable();
+      categories.string('string').notNullable();
 
-      categories
-        .integer('post_id')
-        .unsigned()
-        // .notNullable()
-        .references('id')
-        .inTable('post');
+      
     });
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('posts').dropTableIfExists('users');
+  return knex.schema.dropTableIfExists('posts').dropTableIfExists('users').dropTableIfExists('categories');
 };
