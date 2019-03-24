@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const server = express();
 const logger = require('morgan');
+const path = require('path');
 const helmet = require('helmet');
 server.use(express.json(), logger('dev'), cors(),helmet());
 
