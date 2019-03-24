@@ -7,6 +7,12 @@ exports.up = function(knex) {
         .notNullable()
         .unique();
     })
+    .createTable('categories', function(categories) {
+      categories.increments();
+      categories.string('string').notNullable();
+
+      
+    })
     .createTable('posts', function(posts) {
       posts.increments();
       posts.string('title').notNullable();
@@ -26,12 +32,7 @@ exports.up = function(knex) {
         .inTable('categories');
     })
 
-    .createTable('categories', function(categories) {
-      categories.increments();
-      categories.string('string').notNullable();
-
-      
-    });
+    
 };
 
 exports.down = function(knex) {
