@@ -1,7 +1,7 @@
 const express = require('express');
 const postDb = require('./../data/helpers/postDb.js');
 const multer = require('multer');
-const userDb = require('./../data/helpers/userDb.js');
+// const userDb = require('./../data/helpers/userDb.js');
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
         cb(null, './uploads/')
     },
     filename: function(req, file, cb) {
-        cb(null, new Date().toISOString()+ file.originalname);
+        cb(null, file.filename + '-' + new Date().toISOString());
     }
 
 })
@@ -31,6 +31,24 @@ const upload = multer({
 }
 });
 
+router.post('/', upload.single('postMainImg'),  async (req, res) => {
+    const Post = req.body;
+    const added = await postDb.insert(Post);
+
+    try {
+        if (added) {
+            res.status(201).json('Item Added.');
+        }
+        else {
+            res.json('Please enter title and body.');
+        }
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
+});
+
+
 router.get('/', async (req, res) => {
 
     const posts = await postDb.get(req.query);
@@ -48,23 +66,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', upload.single('postMainImg'),  async (req, res) => {
-    const Post = req.body;
-    Post.user_id = 1;
-    const added = await postDb.insert(Post);
 
-    try {
-        if (added) {
-            res.status(201).json('Item Added.');
-        }
-        else {
-            res.json('Please enter title and body.');
-        }
-    }
-    catch (e) {
-        res.status(500).json(e);
-    }
-});
 
 router.get('/category/:id', async (req, res) => {
 

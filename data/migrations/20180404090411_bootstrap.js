@@ -10,8 +10,8 @@ exports.up = function(knex) {
     .createTable('posts', function(posts) {
       posts.increments();
       posts.string('title').notNullable();
-      posts.string('body').notNullable();
-      posts.string('postMainImg').notNullable();
+      posts.string('body');
+      posts.string('postMainImg');
       posts
         .integer('user_id')
         .unsigned()
