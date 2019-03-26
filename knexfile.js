@@ -21,12 +21,17 @@ module.exports = {
   production: {
     client: 'pg',
     useNullAsDefault: true,
-    connection: process.env.DATABASE_URL,
+    connection: {
+      database: 'd93mn6vlglap7k',
+      user:     'ahfudvwwohmqop',
+      password: 'dd37ebe855222ebb34ff9171962796f4f3749d6fee49e3068b931705080359ae'
+    },
+    // connection: process.env.DATABASE_URL,
     migrations: {
-        directory: __dirname + '/data/migrations',
+        directory: __dirname + '/dt/migrations',
     },
     seeds: {
-        directory: __dirname + '/data/seeds/production',
+        directory: __dirname + '/dt/seeds/',
     },
 },
 };
