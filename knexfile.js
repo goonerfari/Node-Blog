@@ -22,6 +22,7 @@ module.exports = {
     client: 'pg',
     useNullAsDefault: true,
     connection: {
+      connection: 'postgres://ahfudvwwohmqop:dd37ebe855222ebb34ff9171962796f4f3749d6fee49e3068b931705080359ae@ec2-107-20-177-161.compute-1.amazonaws.com:5432/d93mn6vlglap7k',
       database: 'd93mn6vlglap7k',
       user:     'ahfudvwwohmqop',
       password: 'dd37ebe855222ebb34ff9171962796f4f3749d6fee49e3068b931705080359ae'
