@@ -35,7 +35,7 @@ router.post('/', upload.single('postMainImg'),  async (req, res) => {
     const Post = req.body;
     const host = req.hostname;
 
-    const filePath = req.protocol + "://" + host + '/' + req.file.path;
+    const filePath = req.protocol + "://" + host + '' + req.file.path;
     Post.postMainImg = filePath;
     console.log(req.file);
     console.log(filePath);
