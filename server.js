@@ -5,11 +5,11 @@ const logger = require('morgan');
 const path = require('path');
 const helmet = require('helmet');
 server.use(express.json(), logger('dev'), cors(),helmet());
+server.use(express.static(__dirname, './uploads'));
 
 const postRoutes = require('./posts/postRoutes');
 const userRoutes = require('./users/userRoutes');
 
-server.use(express.static(__dirname, './uploads'));
 
 server.get('/', (req, res) => {
     res.status(200).json('Home Page up and running')
