@@ -15,7 +15,7 @@ exports.up = function(knex) {
       posts.increments();
       posts.text('title').notNullable();
       posts.text('body');
-      posts.text('postMainImg');
+      posts.string('postMainImg', 1000);
       posts
         .integer('user_id')
         .unsigned()
