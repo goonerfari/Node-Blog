@@ -31,10 +31,12 @@ const upload = multer({
     fileFilter: fileFilter
 }
 });
-
 router.post('/', upload.single('postMainImg'),  async (req, res) => {
     const Post = req.body;
-    // console.log(Post);
+    const host = req.host;
+
+    const filePath = req.protocol + "://" + host + '/' + req.file.path;
+    Post.postMainImg = filePath;
     console.log(req.file);
     try {
         const added = await postDb.insert(Post);

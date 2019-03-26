@@ -9,6 +9,7 @@ server.use(express.json(), logger('dev'), cors(),helmet());
 const postRoutes = require('./posts/postRoutes');
 const userRoutes = require('./users/userRoutes');
 
+router.use(express.static(__dirname, './uploads'));
 
 server.get('/', (req, res) => {
     res.status(200).json('Home Page up and running')
