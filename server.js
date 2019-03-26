@@ -5,7 +5,7 @@ const logger = require('morgan');
 const path = require('path');
 const helmet = require('helmet');
 server.use(express.json(), logger('dev'), cors(),helmet());
-server.use(express.static(__dirname, './uploads'));
+server.use('/static', express.static(path.join(__dirname, 'uploads')))
 
 const postRoutes = require('./posts/postRoutes');
 const userRoutes = require('./users/userRoutes');
