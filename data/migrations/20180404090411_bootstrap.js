@@ -3,21 +3,21 @@ exports.up = function(knex) {
     .createTable('users', function(users) {
       users.increments();
       users
-        .string('name')
+        .text('name')
         .notNullable()
         .unique();
     })
     .createTable('categories', function(categories) {
       categories.increments();
-      categories.string('string').notNullable();
+      categories.text('name').notNullable();
 
       
     })
     .createTable('posts', function(posts) {
       posts.increments();
-      posts.string('title').notNullable();
-      posts.string('body');
-      posts.string('postMainImg');
+      posts.text('title').notNullable();
+      posts.text('body');
+      posts.text('postMainImg');
       posts
         .integer('user_id')
         .unsigned()
