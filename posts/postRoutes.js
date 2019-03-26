@@ -33,9 +33,9 @@ const upload = multer({
 
 router.post('/', upload.single('postMainImg'),  async (req, res) => {
     const Post = req.body;
-    const added = await postDb.insert(Post);
     console.log(Post)
     try {
+        const added = await postDb.insert(Post);
         if (added) {
             res.status(201).json('Item Added.');
         }
