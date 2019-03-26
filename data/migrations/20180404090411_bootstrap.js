@@ -9,9 +9,7 @@ exports.up = function(knex) {
     })
     .createTable('categories', function(categories) {
       categories.increments();
-      categories.text('name').notNullable();
-
-      
+      categories.text('name').notNullable();  
     })
     .createTable('posts', function(posts) {
       posts.increments();
