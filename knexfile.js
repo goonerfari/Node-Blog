@@ -25,7 +25,7 @@ module.exports = {
       host: 'ec2-75-101-131-79.compute-1.amazonaws.com',
       database: 'd1miilfsg43jp3',
       user:     'grtxagaeepkutv',
-      password: 'dd37ebe855222ebb34ff9171962796f4f3749d6fee49e3068b931705080359ae'
+      password: '65e1cdd69d71e9b05d0369feec8f0952ae2605d46ecc6924b8c0e02e166fb83e'
     },
     // connection: process.env.DATABASE_URL,
     migrations: {
