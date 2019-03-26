@@ -3,17 +3,17 @@ exports.up = function(knex) {
     .createTable('users', function(users) {
       users.increments();
       users
-        .text('name')
+        .string('name', 255)
         .notNullable()
         .unique();
     })
     .createTable('categories', function(categories) {
       categories.increments();
-      categories.text('name').notNullable();  
+      categories.string('name', 255).notNullable();  
     })
     .createTable('posts', function(posts) {
       posts.increments();
-      posts.text('title').notNullable();
+      posts.string('title').notNullable();
       posts.string('body', 1000);
       posts.string('postMainImg', 1000);
       posts
