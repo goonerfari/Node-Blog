@@ -49,7 +49,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', upperCase, async (req, res) => {
+router.post('/', async (req, res) => {
 
     const newUser = req.body;
 
