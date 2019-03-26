@@ -29,10 +29,10 @@ module.exports = {
     },
     // connection: process.env.DATABASE_URL,
     migrations: {
-        directory: __dirname + '/dt/migrations',
+        directory: __dirname + '/data/migrations',
     },
     seeds: {
-        directory: __dirname + '/dt/seeds/',
+        directory: __dirname + '/data/seeds/',
     },
 },
 };
