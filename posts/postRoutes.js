@@ -34,7 +34,9 @@ const upload = multer({
 router.post('/', upload.single('postMainImg'),  async (req, res) => {
     const Post = req.body;
     const host = req.hostname;
-
+    console.log(req.protocol);
+    console.log(host)
+    console.log(req.file.path);
     const filePath = req.protocol + "://" + host + '' + req.file.path;
     Post.postMainImg = filePath || 'lol';
     // console.log(req.file);
