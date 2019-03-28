@@ -36,9 +36,9 @@ router.post('/', upload.single('postMainImg'),  async (req, res) => {
     const host = req.hostname;
 
     const filePath = req.protocol + "://" + host + '' + req.file.path;
-    Post.postMainImg = filePath;
-    console.log(req.file);
-    console.log(filePath);
+    Post.postMainImg = filePath || 'lol';
+    // console.log(req.file);
+    // console.log(filePath);
     try {
         const added = await postDb.insert(Post);
         if (added) {
