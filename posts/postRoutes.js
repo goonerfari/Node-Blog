@@ -46,7 +46,7 @@ router.post('/', upload.single('postMainImg'),  async (req, res) => {
         const added = await postDb.insert(Post);
         
         if (added) {
-            fs.writeFile(processCWD() + "/uploads/" + req.file.path, function(err) {
+            fs.writeFile(process.cwd() + "/uploads/" + req.file.path, function(err) {
                 if (err) console.log(err);
                 
             });
