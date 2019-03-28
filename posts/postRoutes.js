@@ -1,6 +1,7 @@
 const express = require('express');
 const postDb = require('./../data/helpers/postDb.js');
 const multer = require('multer');
+const fs = require('fs');
 // const upload = require('./../uploads')
 // const userDb = require('./../data/helpers/userDb.js');
 const router = express.Router();
@@ -34,16 +35,21 @@ const upload = multer({
 router.post('/', upload.single('postMainImg'),  async (req, res) => {
     const Post = req.body;
     const host = req.hostname;
-    console.log(req.protocol);
-    console.log(host)
-    console.log(req.file.path);
     const filePath = req.protocol + "://" + host + '' + req.file.path;
     Post.postMainImg = filePath || 'lol';
-    // console.log(req.file);
-    // console.log(filePath);
+
+
+    
+
+
     try {
         const added = await postDb.insert(Post);
+        
         if (added) {
+            fs.writeFile(processCWD() + "/uploads/" + req.file.path, function(err) {
+                if (err) console.log(err);
+                
+            });
             res.status(201).json('Item Added.');
         }
         else {
