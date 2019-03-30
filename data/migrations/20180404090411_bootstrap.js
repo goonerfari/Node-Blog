@@ -3,22 +3,22 @@ exports.up = function(knex) {
     .createTable('users', function(users) {
       users.increments();
       users
-        .string('name', 255)
+        .text('name', 255)
         .notNullable()
         .unique();
     })
     .createTable('categories', function(categories) {
       categories.increments();
       categories
-        .string('name', 255)
+        .text('name', 255)
         .notNullable()
         .unique();  
     })
     .createTable('posts', function(posts) {
       posts.increments();
-      posts.string('title', 5000).notNullable();
-      posts.string('body', 5000);
-      posts.string('postMainImg', 255);
+      posts.text('title', 5000).notNullable();
+      posts.text('body', 5000);
+      posts.text('postMainImg', 255);
       posts
         .integer('user_id')
         .unsigned()
