@@ -14,8 +14,8 @@ exports.up = function(knex) {
     .createTable('posts', function(posts) {
       posts.increments();
       posts.string('title').notNullable();
-      posts.string('body', 1000);
-      posts.string('postMainImg', 1000);
+      posts.string('body', 5000);
+      posts.string('postMainImg', 255);
       posts
         .integer('user_id')
         .unsigned()
