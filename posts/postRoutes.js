@@ -46,11 +46,11 @@ router.post('/', upload.single('postMainImg'),  async (req, res) => {
 
     const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
     const file = imageUri(req).content;
-    console.log(`File: ${file}`)
+    // console.log(`File: ${file}`)
     console.log(`Original name: ${req.file.originalname}`)
     cloudinary.uploader.upload(file, result => {
         Post.postMainImg = result.secure_url;
-        console.log(`Result: ${result}`);
+        console.log(result);
     })
     try {
         const added = await postDb.insert(Post);
