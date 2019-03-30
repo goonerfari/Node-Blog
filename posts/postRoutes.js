@@ -4,16 +4,13 @@ const multer = require('multer');
 const fs = require('fs');
 const cloudinary = require('cloudinary');
 const router = express.Router();
+const dataUri = require('datauri');
+
+const newUri = new dataUri();
+
 
 // Multer Storage
-const storage = multer.diskStorage({
-    destination: '/app/uploads/',
-    filename: function(req, file, cb) {
-        cb(null, new Date().toISOString() + '-' + file.originalname );
-        console.log(file)
-    }
-
-})
+const storage = multer.memoryStorage();
 // Multer Filter
 const imageFilter = (req, file, cb) => {
 
@@ -32,7 +29,6 @@ const upload = multer({
         fileFilter: imageFilter
     }
 });
-
 // Cloudinary Config
 cloudinary.config({
     cloud_name: 'htg1iqq1p',
@@ -43,23 +39,18 @@ cloudinary.config({
 
 router.post('/', upload.single('postMainImg'),  async (req, res) => {
     const Post = req.body;
-    const host = req.hostname;
+    // const host = req.hostname;
     console.log(req.file)
     // const filePath = req.protocol + "://" + host + '' + req.file.path;
     // Post.postMainImg = result.secure_url
 
-    cloudinary.uploader.upload(req.file.path, result => {
+    const newUri = req => dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
+    // newUri(req);
+    const file = newUri(req).content;
+
+    cloudinary.uploader.upload(file, result => {
         Post.postMainImg = result.secure_url;
     })
-    // Post.create(req.body, function (err, post) {
-    //     if (err) {
-    //         req.flash('error', err.message);
-    //         return res.redirect('back')
-    //     }
-    //     else {
-    //         res.redirect('/posts' + post.id)
-    //     }
-    // })
     try {
         const added = await postDb.insert(Post);
         
