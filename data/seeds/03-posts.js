@@ -4,13 +4,19 @@ exports.seed = function(knex, Promise) {
       user_id: 1,
       title:
         'I wish the ring had never come to me. I wish none of this had happened.',
+      body: 'Everton have reportedly entered the bidding for Bournemouth and England star Callum Wilson. Marco Silva is intent on adding a reliable goalscorer this summer and appears to have centred on Wilson.',
+      category_id: 3
     },
     {
       user_id: 1,
       title: 'I think we should get off the road. Get off the road! Quick!',
+      body: 'De Ligt is yet to clarify his future but appears to have his sights set on Juventus after revealing the club are interested and a desire to play alongside some of their defenders.',
+      category_id: 1
     },
-    { user_id: 1, title: 'Our business is our own.' },
-    { user_id: 1, title: 'Can you protect me from yourself?' },
+    { user_id: 1, title: 'Our business is our own.', body: 'Solskjaer is planning for the future at Old Trafford after being confirmed as the clubs full-time manager, and knows he will have a substantial budget to buy new playerss',
+    category_id: 2 },
+    { user_id: 1, title: 'Can you protect me from yourself?', body: 'Declan Rice is one of the bright new stars in Gareth Southgate`s England set-up. JAMIE REDKNAPP caught up with the West Ham United midfielder at Forman`s, a restaurant close to the London Stadium, just seven days after his England debut to talk about his remarkable rise. James Restall listened in.',
+    category_id: 1 },
     { user_id: 2, title: "I ain't been droppin' no eaves, sir! Promise!" }, // 5
     { user_id: 2, title: "Of course you are, and I'm coming with you!" }, // 6
     {
