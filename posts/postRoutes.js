@@ -101,7 +101,7 @@ router.get('/category/:id', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
     try {
-        const post = await postDb.getById(req.params.id);
+        const post = await postDb.getById(id);
         if (post) {
             res.status(200).json(post);
         }
