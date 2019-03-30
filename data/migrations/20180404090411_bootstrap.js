@@ -9,11 +9,11 @@ exports.up = function(knex) {
     })
     .createTable('categories', function(categories) {
       categories.increments();
-      categories.string('name', 255).notNullable();  
+      categories.string('name', 255).notNullable().unique();  
     })
     .createTable('posts', function(posts) {
       posts.increments();
-      posts.string('title', 255).notNullable();
+      posts.string('title', 1000).notNullable();
       posts.string('body', 5000);
       posts.string('postMainImg', 255);
       posts
