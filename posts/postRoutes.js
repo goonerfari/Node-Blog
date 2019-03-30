@@ -117,7 +117,7 @@ router.get('/:id', async (req, res) => {
 
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', upload.single('postMainImg'), (req, res) => {
 
     const id = req.params.id;
     // const body = req.body;
