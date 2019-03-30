@@ -22,7 +22,7 @@ exports.up = function(knex) {
       posts
         .integer('user_id')
         .unsigned()
-        .notNullable()
+        // .notNullable()
         .references('id')
         .inTable('users');
       posts
