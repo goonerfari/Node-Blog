@@ -51,8 +51,8 @@ router.post('/', upload.single('postMainImg'), (req, res) => {
     
     console.log(Post);
     cloudinary.uploader.upload(file, result => {
+        Post.postMainImg = result.secure_url;
         postDb.insert(Post).then(res => {
-            Post.postMainImg = result.secure_url;
             console.log(result);
             if (added) {
                 res.status(201).json('Item Added.');
