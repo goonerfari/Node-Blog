@@ -2,46 +2,63 @@ const express = require('express');
 const postDb = require('./../data/helpers/postDb.js');
 const multer = require('multer');
 const fs = require('fs');
-// const upload = require('./../uploads')
-// const userDb = require('./../data/helpers/userDb.js');
+const cloudinary = require('cloudinary');
 const router = express.Router();
 
+// Multer Storage
 const storage = multer.diskStorage({
     destination: '/app/uploads/',
     filename: function(req, file, cb) {
-        // cb(null, file.fieldname + '-' + Date.toISOString())
         cb(null, new Date().toISOString() + '-' + file.originalname );
         console.log(file)
     }
 
 })
-
-const fileFilter = (req, file, cb) => {
+// Multer Filter
+const imageFilter = (req, file, cb) => {
 
     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg' ) {
         cb(null, true)
     } else {
-        cb(null, false);
+        cb(new Error('Only jpeg, jpg, png files are allowed.'), false);
     }
 }
+// Multer Upload Config
 const upload = multer({ 
     storage: storage, 
     limits: {
         fileSize: 1024 * 1024 * 5
-    ,
-    fileFilter: fileFilter
-}
+        ,
+        fileFilter: imageFilter
+    }
 });
+
+// Cloudinary Config
+cloudinary.config({
+    cloud_name: 'htg1iqq1p',
+    api_key: 915419188456665,
+    api_secret: M7938KD1Akyo8XBTmf7jF68jiHA
+})
+
+
 router.post('/', upload.single('postMainImg'),  async (req, res) => {
     const Post = req.body;
     const host = req.hostname;
     const filePath = req.protocol + "://" + host + '' + req.file.path;
     Post.postMainImg = filePath || 'lol';
 
-
-    
-
-
+    cloudinary.uploader.upload(req.file.path, result => {
+        req.body.postMainImg = result.secure_url;
+    })
+    // Post.create(req.body, function (err, post) {
+    //     if (err) {
+    //         req.flash('error', err.message);
+    //         return res.redirect('back')
+    //     }
+    //     else {
+    //         res.redirect('/posts' + post.id)
+    //     }
+    // })
     try {
         const added = await postDb.insert(Post);
         

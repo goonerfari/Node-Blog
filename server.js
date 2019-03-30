@@ -3,8 +3,10 @@ const cors = require('cors');
 const server = express();
 const logger = require('morgan');
 const path = require('path');
+
 const helmet = require('helmet');
-server.use(express.json(), logger('dev'), cors(),helmet());
+
+server.use(express.json(), logger('dev'), cors(), helmet(), );
 server.use('/static', express.static(path.join(__dirname, 'uploads')))
 
 const postRoutes = require('./posts/postRoutes');

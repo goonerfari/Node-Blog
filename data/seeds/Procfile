@@ -1,1 +1,1 @@
-PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
+web: node index.js knex:migrate knex:seed run
