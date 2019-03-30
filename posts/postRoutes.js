@@ -5,7 +5,7 @@ const fs = require('fs');
 const cloudinary = require('cloudinary');
 const router = express.Router();
 const dataUri = require('datauri');
-const path = requirte('path');
+const path = require('path');
 const newUri = new dataUri();
 
 
