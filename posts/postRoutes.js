@@ -52,16 +52,11 @@ router.post('/', upload.single('postMainImg'),  async (req, res) => {
         Post.postMainImg = result.secure_url;
         console.log(result);
     })
+    console.log(Post);
     try {
         const added = await postDb.insert(Post);
         
         if (added) {
-            console.log(process.cwd());
-            console.log(req.file.path);
-            fs.writeFile(process.cwd() + "/uploads/" + req.file.path, function(err) {
-                if (err) console.log(err);
-                
-            });
             res.status(201).json('Item Added.');
         }
         else {
