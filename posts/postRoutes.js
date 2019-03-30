@@ -45,11 +45,11 @@ router.post('/', upload.single('postMainImg'),  async (req, res) => {
     const Post = req.body;
     const host = req.hostname;
     console.log(req.file)
-    const filePath = req.protocol + "://" + host + '' + req.file.path;
-    Post.postMainImg = filePath || 'lol';
+    // const filePath = req.protocol + "://" + host + '' + req.file.path;
+    // Post.postMainImg = result.secure_url
 
     cloudinary.uploader.upload(req.file.path, result => {
-        req.body.postMainImg = result.secure_url;
+        Post.postMainImg = result.secure_url;
     })
     // Post.create(req.body, function (err, post) {
     //     if (err) {
