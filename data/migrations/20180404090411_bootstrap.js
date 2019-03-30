@@ -13,7 +13,7 @@ exports.up = function(knex) {
     })
     .createTable('posts', function(posts) {
       posts.increments();
-      posts.string('title').notNullable();
+      posts.string('title', 255).notNullable();
       posts.string('body', 5000);
       posts.string('postMainImg', 255);
       posts
