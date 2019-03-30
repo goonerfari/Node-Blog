@@ -6,7 +6,7 @@ exports.seed = function(knex, Promise) {
         {
           user_id: 1,
           title:
-            'I wish the ring had never come to me. I wish none of this had happened.',
+            'I wish thee ring had never come to me. I wish none of this had happened.',
           body: 'Everton have reportedly entered the bidding for Bournemouth and England star Callum Wilson. Marco Silva is intent on adding a reliable goalscorer this summer and appears to have centred on Wilson.',
           category_id: 3
         },
