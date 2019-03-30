@@ -53,7 +53,7 @@ router.post('/', upload.single('postMainImg'), (req, res) => {
                 res.status(201).json('Item Added.');
             }
             else {
-                res.json('Please enter title and body.');
+                res.status(404).json('Please enter title and body.');
             }
         })
         .catch(err => {
@@ -83,9 +83,9 @@ router.get('/', async (req, res) => {
 
 router.get('/category/:id', async (req, res) => {
 
-    const posts = await postDb.getByCategoryId(req.params.id);
 
     try {
+        const posts = await postDb.getByCategoryId(req.params.id);
         if (posts.length > 0) {
             res.status(200).json(posts);
         }
@@ -120,9 +120,6 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', upload.single('postMainImg'), (req, res) => {
 
     const id = req.params.id;
-    // const body = req.body;
-    // const newPost = await postDb.update(id, body);
-
     const post = req.body;
     
     const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
@@ -134,6 +131,7 @@ router.put('/:id', upload.single('postMainImg'), (req, res) => {
         post.postMainImg = result.secure_url;
         
         postDb.update(id, post).then(res => {
+            console.log(res)
             if (res) {
                 res.status(201).json(res);
             }
@@ -152,9 +150,10 @@ router.put('/:id', upload.single('postMainImg'), (req, res) => {
 router.delete('/:id', async (req, res) => {
 
     const id = req.params.id;
-    const deleted = await postDb.remove(id);
 
     try {
+    const deleted = await postDb.remove(id);
+
         if (deleted) {
             res.status(200).json('Post successfully deleted.');
         }
