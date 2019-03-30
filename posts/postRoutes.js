@@ -36,34 +36,6 @@ cloudinary.config({
     api_secret: 'M7938KD1Akyo8XBTmf7jF68jiHA'
 })
 
-
-router.post('/', upload.single('postMainImg'), (req, res) => {
-    const post = req.body;
-    
-    const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
-
-    const file = imageUri(req).content;
-    
-    cloudinary.uploader.upload(file, result => {
-
-        post.postMainImg = result.secure_url;
-        
-        postDb.insert(post).then(res => {
-            if (res) {
-                res.status(201).json('Item Added.');
-            }
-            else {
-                res.status(404).json('Please enter title and body.');
-            }
-        })
-        .catch(err => {
-            res.status(500).json(err);
-    
-        })
-    })
-});
-
-
 router.get('/', async (req, res) => {
 
     const posts = await postDb.get(req.query);
@@ -82,7 +54,6 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/category/:id', async (req, res) => {
-
 
     try {
         const posts = await postDb.getByCategoryId(req.params.id);
@@ -117,6 +88,32 @@ router.get('/:id', async (req, res) => {
 
 })
 
+router.post('/', upload.single('postMainImg'), (req, res) => {
+    const post = req.body;
+    
+    const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
+
+    const file = imageUri(req).content;
+    
+    cloudinary.uploader.upload(file, result => {
+
+        post.postMainImg = result.secure_url;
+        
+        postDb.insert(post).then(res => {
+            if (res) {
+                res.status(201).json('Item Added.');
+            }
+            else {
+                res.status(404).json('Please enter title and body.');
+            }
+        })
+        .catch(err => {
+            res.status(500).json(err);
+    
+        })
+    })
+});
+
 router.put('/:id', upload.single('postMainImg'), (req, res) => {
 
     const id = req.params.id;
@@ -132,7 +129,7 @@ router.put('/:id', upload.single('postMainImg'), (req, res) => {
         
         postDb.update(id, post).then(res => {
             console.log(res)
-            if (res) {
+            if (res.title && res.body) {
                 res.status(201).json(res);
             }
             else {
