@@ -36,8 +36,8 @@ const upload = multer({
 // Cloudinary Config
 cloudinary.config({
     cloud_name: 'htg1iqq1p',
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+    api_key: 915419188456665,
+    api_secret: M7938KD1Akyo8XBTmf7jF68jiHA
 })
 
 
