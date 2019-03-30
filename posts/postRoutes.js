@@ -48,20 +48,20 @@ router.post('/', upload.single('postMainImg'),  async (req, res) => {
     const file = imageUri(req).content;
     // console.log(`File: ${file}`)
     console.log(`Original name: ${req.file.originalname}`)
-    cloudinary.uploader.upload(file, result => {
-        Post.postMainImg = result.secure_url;
-        console.log(result);
-    })
+    
     console.log(Post);
     try {
-        const added = await postDb.insert(Post);
-        
-        if (added) {
-            res.status(201).json('Item Added.');
-        }
-        else {
-            res.json('Please enter title and body.');
-        }
+        cloudinary.uploader.upload(file, result => {
+            Post.postMainImg = result.secure_url;
+            const added = await postDb.insert(Post);
+            console.log(result);
+            if (added) {
+                res.status(201).json('Item Added.');
+            }
+            else {
+                res.json('Please enter title and body.');
+            }
+        })
     }
     catch (e) {
         res.status(500).json(e);
