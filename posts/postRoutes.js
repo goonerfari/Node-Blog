@@ -8,7 +8,7 @@ const dataUri = require('datauri');
 const path = require('path');
 const newUri = new dataUri();
 
-
+router.use(express.json());
 // Multer Storage
 const storage = multer.memoryStorage();
 // Multer Filter
@@ -88,7 +88,7 @@ router.get('/:id', async (req, res) => {
 
 })
 
-router.post('/', upload.single('postMainImg'), (req, res) => {
+router.post('/', upload.single('postMainImg'), async (req, res) => {
     const post = req.body;
     
     const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
@@ -98,23 +98,22 @@ router.post('/', upload.single('postMainImg'), (req, res) => {
     cloudinary.uploader.upload(file, result => {
 
         post.postMainImg = result.secure_url;
-        
-        postDb.insert(post).then(res => {
-            if (res) {
+        try {
+            const added = postDb.insert(post);
+            if (added) {
                 res.status(201).json('Item Added.');
-            }
-            else {
+            } else {
                 res.status(404).json('Please enter title and body.');
             }
-        })
-        .catch(err => {
-            res.status(500).json(err);
-    
-        })
+        }
+        catch (e) {
+            console.log(e)
+            res.status(500).json(e);
+        }
     })
 });
 
-router.put('/:id', upload.single('postMainImg'), (req, res) => {
+router.put('/:id', upload.single('postMainImg'), async (req, res) => {
 
     const id = req.params.id;
     const post = req.body;
@@ -127,19 +126,18 @@ router.put('/:id', upload.single('postMainImg'), (req, res) => {
 
         post.postMainImg = result.secure_url;
         
-        postDb.update(id, post).then(res => {
-            console.log(res)
-            if (res.title && res.body) {
-                res.status(201).json(res);
+        try {
+            const updated = postDb.insert(post);
+            if (updated) {
+                res.status(201).json('Item Updated.');
+            } else {
+                res.status(404).json('Please enter title and body.');
             }
-            else {
-                res.json('Please enter title and body.');
-            }
-        })
-        .catch(err => {
-            res.status(500).json(err);
-    
-        })
+        }
+        catch (e) {
+            console.log(e)
+            res.status(500).json(e);
+        }
 
     })
 })
