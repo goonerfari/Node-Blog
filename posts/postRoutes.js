@@ -91,12 +91,13 @@ router.get('/:id', async (req, res) => {
 router.post('/', upload.single('postMainImg'), async (req, res) => {
     const post = req.body;
     
-    const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
-
-    const file = imageUri(req).content;
+    
     
     
     try {
+        const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
+
+        const file = imageUri(req).content;
         cloudinary.uploader.upload(file, result => {
             post.postMainImg = result.secure_url;
         })
@@ -118,12 +119,10 @@ router.put('/:id', upload.single('postMainImg'), async (req, res) => {
     const id = req.params.id;
     const updatedPost = req.body;
     
-    const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
-
-    const file = imageUri(req).content;
-    
-    
     try {
+        const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
+
+        const file = imageUri(req).content;
         cloudinary.uploader.upload(file, result => {
 
             updatedPost.postMainImg = result.secure_url;
