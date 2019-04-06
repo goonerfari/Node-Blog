@@ -3,9 +3,9 @@ exports.up = function(knex) {
     .createTable('users', function(users) {
       users.increments();
       users
-        .text('name', 255)
-        .notNullable()
-        .unique();
+        .text('name', 255).notNullable().unique()
+      users
+        .text('password', 25).notNullable();
     })
     .createTable('categories', function(categories) {
       categories.increments();
