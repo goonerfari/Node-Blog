@@ -95,11 +95,11 @@ router.post('/', upload.single('postMainImg'), async (req, res) => {
 
     const file = imageUri(req).content;
     
-    cloudinary.uploader.upload(file, result => {
-
-        post.postMainImg = result.secure_url;
-    })
+    
     try {
+        cloudinary.uploader.upload(file, result => {
+            post.postMainImg = result.secure_url;
+        })
         const added = await postDb.insert(post);
         if (added) {
             res.status(201).json('Item Added.');
@@ -122,12 +122,13 @@ router.put('/:id', upload.single('postMainImg'), async (req, res) => {
 
     const file = imageUri(req).content;
     
-    cloudinary.uploader.upload(file, result => {
-
-        updatedPost.postMainImg = result.secure_url;
-
-    })
+    
     try {
+        cloudinary.uploader.upload(file, result => {
+
+            updatedPost.postMainImg = result.secure_url;
+    
+        })
         const updated = await postDb.update(id, updatedPost);
         
         if (updated) {
