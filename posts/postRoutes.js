@@ -91,27 +91,26 @@ router.get('/:id', async (req, res) => {
 router.post('/', upload.single('postMainImg'), async (req, res) => {
     const post = req.body;
     
-    
-    
-    
-    try {
-        const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
+    const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
 
-        const file = imageUri(req).content;
-        cloudinary.uploader.upload(file, result => {
-            post.postMainImg = result.secure_url;
-        })
-        const added = await postDb.insert(post);
-        if (added) {
-            res.status(201).json('Item Added.');
-        } else {
-            res.status(404).json('Please enter title and body.');
+    const file = imageUri(req).content;
+    
+    cloudinary.uploader.upload(file, result => {
+
+        post.postMainImg = result.secure_url;
+        try {
+            const added = postDb.insert(post);
+            if (added) {
+                res.status(201).json('Item Added.');
+            } else {
+                res.status(404).json('Please enter title and body.');
+            }
         }
-    }
-    catch (e) {
-        console.log(e)
-        res.status(500).json(e);
-    }
+        catch (e) {
+            console.log(e)
+            res.status(500).json(e);
+        }
+    })
 });
 
 router.put('/:id', upload.single('postMainImg'), async (req, res) => {
@@ -119,27 +118,28 @@ router.put('/:id', upload.single('postMainImg'), async (req, res) => {
     const id = req.params.id;
     const updatedPost = req.body;
     
-    try {
-        const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
+    const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
 
-        const file = imageUri(req).content;
-        cloudinary.uploader.upload(file, result => {
-
-            updatedPost.postMainImg = result.secure_url;
+    const file = imageUri(req).content;
     
-        })
-        const updated = await postDb.update(id, updatedPost);
+    cloudinary.uploader.upload(file, result => {
+
+        updatedPost.postMainImg = result.secure_url;
         
-        if (updated) {
-            res.status(201).json('Item Updated.');
-        } else {
-            res.status(404).json('Please enter title and body.');
+        try {
+            const updated = postDb.update(id, updatedPost);
+            if (updated) {
+                res.status(201).json('Item Updated.');
+            } else {
+                res.status(404).json('Please enter title and body.');
+            }
         }
-    }
-    catch (e) {
-        console.log(e)
-        res.status(500).json(e);
-    }
+        catch (e) {
+            console.log(e)
+            res.status(500).json(e);
+        }
+
+    })
 })
 
 router.delete('/:id', async (req, res) => {
