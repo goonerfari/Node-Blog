@@ -88,7 +88,7 @@ router.get('/:id', async (req, res) => {
 
 })
 
-router.post('/', upload.single('postMainImg'), async (req, res) => {
+router.post('/', upload.single('postMainImg'), (req, res) => {
     const post = req.body;
     
     const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
@@ -98,25 +98,27 @@ router.post('/', upload.single('postMainImg'), async (req, res) => {
     cloudinary.uploader.upload(file, result => {
 
         post.postMainImg = result.secure_url;
-        try {
-            const added = postDb.insert(post);
-            if (added) {
+
+        postDb.insert(post)
+        .then(res => {
+            if (res) {
                 res.status(201).json('Item Added.');
-            } else {
+            }
+            else {
                 res.status(404).json('Please enter title and body.');
             }
-        }
-        catch (e) {
-            console.log(e)
-            res.status(500).json(e);
-        }
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+
     })
 });
 
-router.put('/:id', upload.single('postMainImg'), async (req, res) => {
+router.put('/:id', upload.single('postMainImg'), (req, res) => {
 
     const id = req.params.id;
-    const updatedPost = req.body;
+    const post = req.body;
     
     const imageUri = req => newUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
 
@@ -124,20 +126,20 @@ router.put('/:id', upload.single('postMainImg'), async (req, res) => {
     
     cloudinary.uploader.upload(file, result => {
 
-        updatedPost.postMainImg = result.secure_url;
-        
-        try {
-            const updated = postDb.update(id, updatedPost);
-            if (updated) {
-                res.status(201).json('Item Updated.');
-            } else {
+        post.postMainImg = result.secure_url;
+
+        postDb.update(id, post)
+        .then(res => {
+            if (res) {
+                res.status(201).json('Item updated.');
+            }
+            else {
                 res.status(404).json('Please enter title and body.');
             }
-        }
-        catch (e) {
-            console.log(e)
-            res.status(500).json(e);
-        }
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
 
     })
 })
