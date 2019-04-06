@@ -128,6 +128,9 @@ router.put('/:id', upload.single('postMainImg'), async (req, res) => {
         
         try {
             const updated = postDb.update(id, updatedPost);
+            console.log(updated);
+            console.log(id);
+            console.log(updatedPost);
             if (updated) {
                 res.status(201).json('Item Updated.');
             } else {
