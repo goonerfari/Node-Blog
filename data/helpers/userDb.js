@@ -27,7 +27,7 @@ function getUserPosts(userId) {
     .where('p.user_id', userId);
 }
 
-function insert(user) {
+async function insert(user) {
   return db('users')
     .insert(user)
     .then(ids => {
@@ -38,7 +38,7 @@ function insert(user) {
 function findBy(filter) {
   return db('users').where(filter);
 }
-function update(id, changes) {
+async function update(id, changes) {
   return db('users')
     .where({ id })
     .update(changes);
