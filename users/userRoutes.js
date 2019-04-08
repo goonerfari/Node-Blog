@@ -2,6 +2,7 @@ const express = require('express');
 const postDb = require('../data/helpers/postDb.js');
 const userDb = require('../data/helpers/userDb.js');
 const router = express.Router();
+const restricted = require('../auth/restricted.js');
 
 router.use(express.json());
 
@@ -32,7 +33,7 @@ router.use((err, req, res, next) => {
         });
 });
 
-router.get('/', async (req, res) => {
+router.get('/', restricted, async (req, res) => {
 
     try {
         const users = await userDb.get();
