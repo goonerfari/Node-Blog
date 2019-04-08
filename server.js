@@ -19,7 +19,7 @@ server.get('/', (req, res) => {
 
 server.use('/api/posts/', postRoutes);
 server.use('/api/users/', userRoutes);
-server.use('/auth', authRoutes);
+server.use('/auth/', authRoutes);
 
 
 module.exports = server;
