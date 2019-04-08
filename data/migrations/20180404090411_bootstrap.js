@@ -2,7 +2,10 @@ exports.up = function(knex) {
   return knex.schema
     .createTable('roles', function(roles) {
       roles.increments();
-      roles.text('name', 25).notNullable().unique()
+      roles
+        .text('name', 25)
+        .notNullable()
+        .unique()
     })
     .createTable('users', function(users) {
       users.increments();
@@ -50,5 +53,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('posts').dropTableIfExists('users').dropTableIfExists('categories');
+  return knex.schema.dropTableIfExists('roles').dropTableIfExists('posts').dropTableIfExists('users').dropTableIfExists('categories');
 };
