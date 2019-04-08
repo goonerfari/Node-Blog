@@ -26,6 +26,7 @@ router.post('/register', (req, res) => {
         console.log(user)
         if (user && bcrypt.compareSync(password, user.password)) {
           const token = generateToken(user)
+          console.log(token);
           res.status(200).json({
             token, message: `Welcome ${user.username}!`,
           });
