@@ -3,6 +3,7 @@ const db = require('../dbConfig.js');
 module.exports = {
   get,
   getById,
+  findBy,
   getUserPosts,
   insert,
   update,
@@ -34,6 +35,9 @@ function insert(user) {
     });
 }
 
+function findBy(filter) {
+  return db('users').where(filter);
+}
 function update(id, changes) {
   return db('users')
     .where({ id })
