@@ -21,7 +21,7 @@ router.post('/register', (req, res) => {
     let { username, password } = req.body;
     console.log(username);
     console.log(password);
-    console.log(bcrypt.compareSync(password, user.password))
+    // console.log(bcrypt.compareSync(password, user.password))
     console.log(users)
     users.findBy({ username })
       .first()
