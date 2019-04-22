@@ -22,7 +22,7 @@ router.post('/register', (req, res) => {
     console.log(username);
     console.log(password);
     console.log(bcrypt.compareSync(password, user.password))
-    console.log(users).$log([keyPath-optional])
+    console.log(users)
     users.findBy({ username })
       .first()
       .then(user => {
