@@ -31,7 +31,7 @@ router.post('/register', (req, res) => {
           const token = generateToken(user);
           console.log(user)
           res.status(200).json({
-            token, message: `Welcome ${user.username}!`, user: user
+            token, message: `Welcome ${user.username}!`, username: user.username
           });
         } else {
           res.status(401).json({ message: 'Invalid Credentials' });
